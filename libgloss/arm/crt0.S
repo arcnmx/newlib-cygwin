@@ -140,7 +140,7 @@
 *                          his own implementation if current doesn't fit.
 *
 ******************************************************************************/
-	.align	0
+	.align	1
 	FUNC_START	_stack_init
 	.weak FUNCTION (_stack_init)
 	FN_EH_START
@@ -244,7 +244,7 @@
 /*******************************************************************************
 * Main library startup code.
 *******************************************************************************/
-	.align 	0
+	.align 	1
 	FUNC_START	_mainCRTStartup
 	FUNC_START	_start
 	FN_EH_START
@@ -565,7 +565,7 @@ change_back:
 
 	/* For Thumb, constants must be after the code since only 
 	   positive offsets are supported for PC relative addresses.  */
-	.align 0
+	.align 2
 .LC0:
 #ifdef ARM_RDI_MONITOR
 	.word	HeapBase
