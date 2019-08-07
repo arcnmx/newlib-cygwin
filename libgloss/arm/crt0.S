@@ -285,7 +285,7 @@
 	movs	r0, #AngelSWI_Reason_HeapInfo
 	adr	r1, .LC0	/*  Point at ptr to 4 words to receive data.  */
 #ifdef THUMB_VXM
-	bkpt	AngelSWI
+	AngelSWIAsm (AngelSWI)
 #elif defined(__thumb2__)
 	/*  We are in thumb mode for startup on armv7 architectures.  */
 	AngelSWIAsm (AngelSWI)
