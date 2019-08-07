@@ -176,31 +176,34 @@ initialise_monitor_handles (void)
     monitor_stderr = do_AngelSWI (AngelSWI_Reason_Open, (void *) block);
   }
 #else
-  int fh;
   const char * name;
+  register int r0 asm("r0");
+  register int r1 asm("r1");
 
   name = ":tt";
-  asm ("mov r0,%2; mov r1, #0; swi %a1; mov %0, r0"
-       : "=r"(fh)
-       : "i" (SWI_Open),"r"(name)
-       : "r0","r1");
-  monitor_stdin = fh;
+
+  r0 = (int) name;
+  r1 = 0;
+  asm ("swi %a2;"
+       : "+r"(r0)
+       : "r"(r1),"i"(SWI_Open));
+  monitor_stdin = r0;
 
   if (_has_ext_stdout_stderr ())
   {
-    name = ":tt";
-    asm ("mov r0,%2; mov r1, #4; swi %a1; mov %0, r0"
-	 : "=r"(fh)
-	 : "i" (SWI_Open),"r"(name)
-	 : "r0","r1");
-    monitor_stdout = fh;
+    r0 = (int) name;
+    r1 = 4;
+    asm ("swi %a2"
+	 : "+r"(r0)
+	 : "r"(r1),"i"(SWI_Open));
+    monitor_stdout = r0;
 
-    name = ":tt";
-    asm ("mov r0,%2; mov r1, #8; swi %a1; mov %0, r0"
-	 : "=r"(fh)
-	 : "i" (SWI_Open),"r"(name)
-	 : "r0","r1");
-    monitor_stderr = fh;
+    r0 = (int) name;
+    r1 = 8;
+    asm ("swi %a2"
+	 : "+r"(r0)
+	 : "r"(r1),"i"(SWI_Open));
+    monitor_stderr = r0;
   }
 #endif
 

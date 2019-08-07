@@ -159,7 +159,7 @@ ALIAS(wait4)
 # define SOCKETCALL(name, NAME) \
 	GLOBAL(name); \
 	push { r0 - r3 }; \
-	mov r0, #SYS_ ## NAME; \
+	ldr r0, =SYS_ ## NAME; \
 	b _socketcall_tail; \
 	SIZE(name)
 #endif
